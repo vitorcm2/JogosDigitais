@@ -25,7 +25,7 @@ public class GameManager
    {
        vidas = 3;
        pontos = 0;
-       gameState = GameState.GAME;
+       gameState = GameState.MENU;
    }
 
     public delegate void ChangeStateDelegate();

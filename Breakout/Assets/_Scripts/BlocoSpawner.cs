@@ -11,14 +11,7 @@ public class BlocoSpawner : MonoBehaviour
         gm = GameManager.GetInstance();
         GameManager.changeStateDelegate += Construir;
         Construir();
-        for(int i = 0; i < 12; i++)
-        {
-            for(int j = 0; j < 4; j++){
-            Vector3 posicao = new Vector3(-9 + 1.55f * i, 4 - 0.55f * j);
-            Instantiate(Blocos, posicao, Quaternion.identity, transform);
-            
-            }
-        }
+        
     }
     void Update()
 {
@@ -37,10 +30,10 @@ void Construir()
           foreach (Transform child in transform) {
               GameObject.Destroy(child.gameObject);
           }
-          for(int i = 0; i < 12; i++)
+          for(int i = 0; i < 9; i++)
           {
               for(int j = 0; j < 4; j++){
-                  Vector3 posicao = new Vector3(-9 + 1.55f * i, 4 - 0.55f * j);
+                  Vector3 posicao = new Vector3(-7 + 1.7f * i, 4 - 0.7f * j);
 
                   Instantiate(Blocos, posicao, Quaternion.identity, transform);
               }
