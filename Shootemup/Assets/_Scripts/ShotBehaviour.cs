@@ -4,9 +4,14 @@ using UnityEngine;
 
 public class ShotBehaviour : SteerableBehaviour
 {
+    GameManager gm;
+
+    private void Start(){
+        gm = GameManager.GetInstance();
+    }
     private void Update()
    {
-       Thrust(1, 0);
+       Thrust(2, 0);
    }
 
    private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +23,9 @@ public class ShotBehaviour : SteerableBehaviour
        if (!(damageable is null))
        {
            damageable.TakeDamage();
+
        }
-       Destroy(gameObject);
+       gameObject.SetActive(false);
+       gm.pontos += 10;
    }
 }

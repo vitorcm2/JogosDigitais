@@ -6,6 +6,12 @@ public class EnemyController : SteerableBehaviour, IShooter, IDamageable
 {
 
     public GameObject tiro;
+    private int vidas;
+
+    private void Start(){
+        
+        vidas = 3;
+    }
 
     public void Shoot()
     {
@@ -14,7 +20,8 @@ public class EnemyController : SteerableBehaviour, IShooter, IDamageable
 
     public void TakeDamage()
     {
-        Die();
+        vidas--;
+        if (vidas <= 0) Die();
     }
 
     public void Die()

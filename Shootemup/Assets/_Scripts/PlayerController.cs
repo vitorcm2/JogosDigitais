@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class PlayerController : SteerableBehaviour, IShooter, IDamageable
 {
+    GameManager gm;
     Animator animator;
     public GameObject bullet;
     public Transform arma;
     private int lifes;
 
-    public float shootDelay = 0.5f;
+    public float shootDelay = 0.05f;
     private float _lastShootTimestamp = 0.0f;
 
     private void Start(){
+        gm = GameManager.GetInstance();
         animator = GetComponent<Animator>();
-        lifes = 10;
+        
 
     }
 
 
-    public AudioClip shootSFX;
+    public AudioClip shootSFX; 
 
     public void Shoot()
     {
@@ -31,17 +33,22 @@ public class PlayerController : SteerableBehaviour, IShooter, IDamageable
 
     public void TakeDamage()
     {
-        lifes--;
-        if (lifes <= 0) Die();
+        gm.vidas--;
+        if (gm.vidas <= 0) Die();
     }
 
     public void Die()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        gm.ChangeState(GameManager.GameState.ENDGAME);
+
     }
 
     void FixedUpdate()
     {
+
+        if (gm.gameState != GameManager.GameState.GAME) return;
+
         float yInput = Input.GetAxis("Vertical");
         float xInput = Input.GetAxis("Horizontal");
         Thrust(xInput, yInput);
@@ -56,6 +63,10 @@ public class PlayerController : SteerableBehaviour, IShooter, IDamageable
         {
            Shoot();
         }
+
+   if(Input.GetKeyDown(KeyCode.Escape) && gm.gameState == GameManager.GameState.GAME) {
+       gm.ChangeState(GameManager.GameState.PAUSE);
+   }
     }    
 
     private void OnTriggerEnter2D(Collider2D collision)
